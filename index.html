@@ -1,32 +1,174 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>BK Software Developers</title>
-    <style>
-        body { font-family: Arial; text-align: center; padding: 40px; }
-        h1 { color: #1a73e8; }
-        .app { margin-top: 20px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BK Software Developers</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* APP SECTION */
+.apps {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* FEATURE IMAGE */
+.feature-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* CONTENT */
+.content {
+    padding: 20px;
+    text-align: center;
+}
+
+.content h3 {
+    margin-bottom: 10px;
+}
+
+.content p {
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+/* BUTTON */
+.btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 25px;
+    border-radius: 30px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 30px;
+    opacity: 0.7;
+}
+
+a {
+    color: #00c6ff;
+    text-decoration: none;
+}
+
+/* MOBILE */
+@media(max-width: 600px){
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
+</style>
+
 </head>
+
 <body>
 
-<h1>BK Software Developers</h1>
-<p>We build modern, secure, and user-friendly mobile applications.</p>
+<!-- HERO -->
+<section class="hero">
+    <h1>BK Software Developers</h1>
+    <p>Modern • Secure • High Performance Apps</p>
+</section>
 
-<h2>Our Apps</h2>
+<!-- APPS -->
+<section class="apps">
 
-<div class="app">
-    <h3>WandaFlix, BK Music & Wifi Swift Bridge</h3>
-    <p>Stream movies securely and easily On Wandaflix, Use wifi everywhere you go using Wifi Swift Bridge.</p>
-</div>
+    <!-- WANDAFLIX -->
+    <div class="card">
+        <img src="wandaflix.png" class="feature-img" alt="WandaFlix">
+        <div class="content">
+            <h3>🎬 WandaFlix</h3>
+            <p>Stream movies and TV shows securely with fast performance and smooth playback.</p>
+            <a href="#" class="btn">Download</a>
+        </div>
+    </div>
 
-<br>
+    <!-- BK MUSIC -->
+    <div class="card">
+        <img src="bkmusic.png" class="feature-img" alt="BK Music">
+        <div class="content">
+            <h3>🎧 BK Music</h3>
+            <p>Listen to your favorite songs anytime with a powerful and beautiful music player.</p>
+            <a href="#" class="btn">Download</a>
+        </div>
+    </div>
 
-<a href="privacy.html">Privacy Policy</a><br>
-<a href="terms.html">Terms of Service</a>
+    <!-- WIFI SWIFT BRIDGE -->
+    <div class="card">
+        <img src="wifi.png" class="feature-img" alt="Wifi Swift Bridge">
+        <div class="content">
+            <h3>📶 Wifi Swift Bridge</h3>
+            <p>Find and connect to WiFi networks everywhere you go instantly and securely.</p>
+            <a href="#" class="btn">Download</a>
+        </div>
+    </div>
 
-<p>Contact: aturinzireedwin13@gmail.com</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>
+        <a href="privacy.html">Privacy Policy</a> |
+        <a href="terms.html">Terms of Service</a>
+    </p>
+    <p>Contact: aturinzireedwin13@gmail.com</p>
+</footer>
 
 </body>
 </html>
