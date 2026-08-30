@@ -1,0 +1,15 @@
+const express=require('express');const cors=require('cors');const rateLimit=require('express-rate-limit');const {Resend}=require('resend');
+const app=express();const PORT=process.env.PORT||3000;
+const allowed=(process.env.ALLOWED_ORIGINS||'').split(',').map(x=>x.trim()).filter(Boolean);
+app.use(cors({origin:(origin,cb)=>{if(!origin||!allowed.length||allowed.includes(origin))return cb(null,true);cb(new Error('Origin not allowed'));}}));
+app.use(express.json({limit:'20kb'}));app.use('/api/enquiry',rateLimit({windowMs:15*60*1000,max:8,standardHeaders:true,legacyHeaders:false}));
+const clean=(v,n)=>String(v??'').trim().slice(0,n);const emailOK=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+app.get('/health',(_,r)=>r.json({ok:true}));
+app.post('/api/enquiry',async(req,res)=>{try{if(clean(req.body.website,100))return res.status(400).json({error:'Spam detected.'});
+const name=clean(req.body.name,100),email=clean(req.body.email,160),phone=clean(req.body.phone,60),service=clean(req.body.service,120),budget=clean(req.body.budget,120),message=clean(req.body.message,5000);
+if(!name||!email||!message)return res.status(400).json({error:'Name, email and message are required.'});if(!emailOK(email))return res.status(400).json({error:'Invalid email.'});
+const {RESEND_API_KEY,TO_EMAIL,FROM_EMAIL}=process.env;if(!RESEND_API_KEY||!TO_EMAIL||!FROM_EMAIL)return res.status(500).json({error:'Email service is not configured.'});
+const resend=new Resend(RESEND_API_KEY);const {data,error}=await resend.emails.send({from:FROM_EMAIL,to:[TO_EMAIL],replyTo:email,subject:`New BK Software Developers enquiry — ${name}`,html:`<div style="font-family:Arial,sans-serif;max-width:680px;margin:auto"><h2>New Project Enquiry</h2><hr><p><b>Name:</b> ${esc(name)}</p><p><b>Email:</b> ${esc(email)}</p><p><b>Phone / WhatsApp:</b> ${esc(phone||'Not provided')}</p><p><b>Service:</b> ${esc(service||'Not specified')}</p><p><b>Budget:</b> ${esc(budget||'Not specified')}</p><h3>Project message</h3><p style="white-space:pre-wrap">${esc(message)}</p></div>`});
+if(error)return res.status(502).json({error:'Email provider rejected the enquiry.'});res.json({ok:true,id:data?.id||null});}catch(e){console.error(e);res.status(500).json({error:'Unexpected server error.'});}});
+app.listen(PORT,()=>console.log(`BK enquiry API listening on ${PORT}`));

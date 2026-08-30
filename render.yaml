@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: bk-software-developers-enquiry-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: RESEND_API_KEY
+        sync: false
+      - key: TO_EMAIL
+        sync: false
+      - key: FROM_EMAIL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
